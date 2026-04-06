@@ -1,71 +1,140 @@
-# Verificar e instalar node y npm
+# Primer proyecto de automatización con Playwright
 
-Descargar e instalar Visual Studio Code:
+En este branch comenzamos a trabajar con Playwright, una herramienta de automatización de pruebas para aplicaciones web.
 
-https://code.visualstudio.com/
+## El objetivo de este repositorio es:
 
-Una vez instalado vs code.
++ crear el primer proyecto Playwright
 
-* Abrir una terminal y ejecutar los siguientes comandos:
++ comprender la estructura básica del framework
 
-```node -v ``` - ENTORNO DE DESARROLLO
++ ejecutar los primeros tests automatizados
 
-```npm -v ``` - PACKAGE MANAGER (MANEJADOR DE PAQUETES) - los paquetes contienen soluciones que se pueden reutilizar. https://www.npmjs.com/ 
++ ver distintas formas de generar un caso de prueba
 
-* El comando -v nos ayuda a comprobar si la aplicacion, dependecia o paquete que precisamos esta instalado en nuestro entorno de trabajo.
-___
+## Crear el proyecto Playwright
 
-* Si la consulta ES SATISFACTORIA deberiamos ver la version instalada, algo similar a esto:
+Para crear el proyecto se utilizó el siguiente comando:
 
-``` 
-v20.10.0
+```
+npm init playwright@latest
+```
 
-9.8.1
-``` 
+Este comando genera automáticamente:
 
-- Una vez instalado node y npm desde la terminal vamos a ejecutar:
++ estructura del proyecto
 
-```npm init playwright@latest ```
-___
++ instalación de Playwright
 
-* Si la respuesta NO ES SATISFACTORIA debes instalar node y npm:
++ instalación de navegadores
 
-https://nodejs.org/
++ archivos de configuración
 
-Se recomienda instalar la versión LTS (Long Term Support).
+Después de ejecutar el comando se creó la carpeta del proyecto con los archivos necesarios.
 
-Una vez instalado repetir los pasos de verificación.
-___
+## Ejecutar los tests
 
-### PACKAGE.JSON
+Para ejecutar los casos de prueba utilizamos el comando:
 
-package.json es el archivo principal de un proyecto Node.
+```
+npx playwright test
+```
 
-Contiene información como:
+Este comando ejecuta todos los archivos **.spec.js** que se encuentran dentro de la carpeta tests.
 
-* nombre del proyecto
-* versión
-* dependencias instaladas
-* scripts de ejecución
+## Ejecutar en modo visual
 
-Cada vez que instalamos una librería, queda registrada en este archivo.
-____
+También podemos ejecutar los tests en modo interfaz con:
 
-### COMANDOS UTILES:
+```
+npx playwright test --ui
+```
 
-```node archivo.js``` -> ejecuta el archivo js con su contenido.
+Esto permite ver los tests ejecutándose y analizar los resultados.
 
-```node -e "console.log('Hola mundo')"``` -> puede ejecutar código sin crear un archivo.
+**Ejemplo 1 — Test generado con Codegen**
 
-```node``` -> abre una consola donde se puede escribir JavaScript directamente.
+Playwright permite generar casos de prueba automáticamente usando una herramienta llamada Codegen.
 
-> 2 + 2
-4
+## El siguiente comando abre un navegador y una grabadora de acciones:
+```
+npx playwright codegen https://opensource-demo.orangehrmlive.com
+```
 
-> var nombre = "Amancio"
-undefined
+**A partir de ese momento:**
 
-> nombre
-'Amancio'
+Playwright abre la página indicada.
 
-```.exit``` ó **Ctrl + c** -> cierran el ejecutor js de node
+Cada acción realizada en el navegador se transforma en código.
+
+El código puede copiarse y guardarse como un test.
+
+## Este método es útil para:
+
+* aprender locators
+
+* entender cómo Playwright interactúa con los elementos
+
+* generar rápidamente un caso de prueba inicial
+
+Sin embargo, el código generado normalmente necesita ser limpiado y simplificado.
+
+**Ejemplo 2 — Test extendido**
+
+En este ejemplo se utilizó nuevamente Codegen, pero se realizaron más acciones dentro de la página.
+
+El objetivo de este test es mostrar que Playwright puede:
+
+1) interactuar con distintos elementos
+
+2) completar formularios
+
+3) validar mensajes de error
+
+Este tipo de tests suele utilizarse para explorar una aplicación antes de escribir automatizaciones más organizadas.
+
+**Ejemplo 3 — Primer test escrito manualmente**
+
+En este ejemplo el test fue escrito manualmente para mostrar una estructura más clara.
+
+El flujo del test es:
+
+1) abrir la página de login
+
+2) completar usuario y contraseña
+
+3) hacer clic en login
+
+4) validar que el acceso fue exitoso
+
+La validación se realiza comprobando que la URL corresponda al dashboard del sistema.
+
+**Ejemplo 4 — Validación de elementos del dashboard**
+
+Este test muestra cómo validar que un elemento está visible en la aplicación.
+
+Pasos del test:
+
+1) realizar login
+
+2) validar redirección al dashboard
+
+3) verificar que el título "Dashboard" esté visible
+
+Esto permite comprobar que la página se cargó correctamente.
+
+**Ejemplo 5 — Validación de un módulo del sistema**
+
+En este ejemplo se muestra cómo recorrer elementos de una lista usando un loop.
+
+El objetivo del test es:
+
+1) obtener todos los módulos del menú lateral
+
+2) recorrerlos uno por uno
+
+3) verificar si existe el módulo PIM
+
+Esto introduce un concepto importante en automatización:
+analizar múltiples elementos de la interfaz utilizando lógica de programación.
+--
